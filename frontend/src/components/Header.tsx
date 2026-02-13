@@ -1,15 +1,29 @@
+import { AppBar, Toolbar, Typography, Box } from "@mui/material";
+import SupportAgentIcon from "@mui/icons-material/SupportAgent";
+
 export function Header() {
   return (
-    <header style={{
-      height: 60,
-      background: "#0000FF",
-      display: "flex",
-      alignItems: "center",
-      padding: "0 20px",
-      fontWeight: "bold",
-      color: "	#FF8C00",
-    }}>
-      Sistema de Chamados
-    </header>
+    <AppBar
+      position="static"
+      elevation={2}
+      sx={{
+        backgroundColor: "#0f172a",
+      }}
+    >
+      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+        
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <SupportAgentIcon />
+          <Typography variant="h6" sx={{ fontWeight: 600 }}>
+            Service Desk
+          </Typography>
+        </Box>
+
+        <Typography variant="body2" sx={{ opacity: 0.8 }}>
+          Sistema de Chamados TI
+        </Typography>
+
+      </Toolbar>
+    </AppBar>
   );
 }
