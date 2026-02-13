@@ -1,6 +1,6 @@
 import type { Chamado } from "../types/Chamado";
 
-const API_URL = "http://localhost:3001/chamados";
+const API_URL = "http://localhost:3000/chamados";
 
 export const listarChamados = async (): Promise<Chamado[]> => {
   const response = await fetch(API_URL);
@@ -22,5 +22,17 @@ export const criarChamado = async (
 export const deletarChamado = async (id: number): Promise<void> => {
   await fetch(`${API_URL}/${id}`, {
     method: "DELETE",
+  });
+};
+export const atualizarChamado = async (
+  id: number,
+  dados: Partial<Omit<Chamado, "id">>
+): Promise<void> => {
+  await fetch(`${API_URL}/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(dados),
   });
 };

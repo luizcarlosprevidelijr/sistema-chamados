@@ -1,7 +1,10 @@
 import express from "express";
+import cors from "cors";
 import chamadoRoutes from "./routes/chamadoRoutes";
 
 const app = express();
+
+app.use(cors()); // 👈 ESSA LINHA RESOLVE
 
 app.use(express.json());
 
