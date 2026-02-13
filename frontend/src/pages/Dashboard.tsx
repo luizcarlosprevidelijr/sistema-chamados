@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { listarChamados } from "../services/chamadoService";
 import type { Chamado } from "../types/Chamado";
 import { ChamadoCard } from "../components/ChamadoCard";
+import { MenuItem, Select, FormControl, InputLabel } from "@mui/material";
+
 
 import {
   Grid,
@@ -21,6 +23,12 @@ export default function Dashboard() {
   const [chamados, setChamados] = useState<Chamado[]>([]);
   const [chamadoSelecionado, setChamadoSelecionado] = useState<Chamado | null>(null);
   const navigate = useNavigate();
+
+  const usuarioLogado = {
+    id: 1,
+    nome: "Carlos",
+    role: "responsavel" // troca para "usuario" para testar
+  };
 
   const carregarChamados = async () => {
     const data = await listarChamados();
@@ -129,11 +137,34 @@ export default function Dashboard() {
           </Typography>
 
           {chamadoSelecionado && (
-            <Chip
-              label={chamadoSelecionado.status}
-              color={getStatusColor(chamadoSelecionado.status) as any}
-            />
+            <>
+              {usuarioLogado.role === "responsavel" ? (
+                <FormControl fullWidth sx={{ mt: 2 }}>
+                  <InputLabel>Status</InputLabel>
+                  <Select
+                    value={chamadoSelecionado.status}
+                    label="Status"
+                    onChange={(e) =>
+                      setChamadoSelecionado({
+                        ...chamadoSelecionado,
+                        status: e.target.value
+                      })
+                    }
+                  >
+                    <MenuItem value="aberto">Aberto</MenuItem>
+                    <MenuItem value="em andamento">Em Andamento</MenuItem>
+                    <MenuItem value="finalizado">Finalizado</MenuItem>
+                  </Select>
+                </FormControl>
+              ) : (
+                <Chip
+                  sx={{ mt: 2 }}
+                  label={chamadoSelecionado.status}
+                />
+              )}
+            </>
           )}
+
         </DialogContent>
 
         <DialogActions>
